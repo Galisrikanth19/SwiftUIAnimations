@@ -1,0 +1,17 @@
+//
+//  SwiftUIAnimationsApp.swift
+//  SwiftUIAnimations
+//
+//  Created by GaliSrikanth on 08/05/24.
+//
+
+import SwiftUI
+
+@main
+struct SwiftUIAnimationsApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
