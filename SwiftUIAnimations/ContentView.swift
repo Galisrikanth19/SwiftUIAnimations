@@ -9,11 +9,14 @@ struct ContentView: View {
     @State private var isAnimatingCircle = false
     @State private var isAnimatingButton = false
     
+    
+    @State private var sliderValue = 0.0
+    
     var body: some View {
         ZStack {
             LinearGradient(colors: [Color.red, Color.gray], startPoint: .topLeading, endPoint: .bottomTrailing)
             
-            VStack(spacing: 30) {
+            VStack(spacing: 50) {
                 //Annual Subscription
                 HStack(spacing: 0) {
                     Text("Annual subscription")
@@ -69,12 +72,59 @@ struct ContentView: View {
                         .scaleEffect(isAnimatingButton ? 1.5 : 1.0)
                 }
                 
+                
+                //ProgressBar
+                ProgressBar(width: 300,
+                            height: 30,
+                            percent: sliderValue,
+                            barColor1: Color.white,
+                            barColor2: Color.yellow)
+                .animation(.linear)
+                
+                Button {
+                    sliderValue = CGFloat.random(in: 0...100)
+                } label: {
+                    Text("Change slider value")
+                }
             }
         }
         .ignoresSafeArea()
     }
 }
 
-#Preview {
-    ContentView()
+struct ProgressBar: View {
+    var width: CGFloat = 200
+    var height: CGFloat = 20
+    var percent: CGFloat = 90
+    
+    var barColor1 = Color.black
+    var barColor2 = Color.green
+    
+    var multipler: CGFloat {
+        return (width * percent)/100
+    }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: height, style: .continuous)
+                .frame(width: width, height: height)
+            .foregroundStyle(Color.black.opacity(0.1))
+            
+            RoundedRectangle(cornerRadius: height, style: .continuous)
+                .frame(width: multipler, height: height)
+            .foregroundStyle(Color.clear)
+            .background(
+                LinearGradient(colors: [barColor1, barColor2, barColor1],
+                               startPoint: .leading,
+                               endPoint: .trailing)
+                    .clipShape(RoundedRectangle(cornerRadius: height,
+                                                style: .continuous)
+                    )
+            )
+        }
+    }
 }
+
+//#Preview {
+//    ContentView()
+//}
